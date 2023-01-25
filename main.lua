@@ -28,7 +28,7 @@ function love.update(dt) -- 'dt' signifie 'delta time' soit le FPS ?
     ]]
     Inputs()
     GameMap:update(dt)
-    Player.sprite_animation(dt)
+    Animation.update_all_sprite(dt)
 end
 
 function love.draw()
@@ -43,15 +43,19 @@ end
 
 function Inputs() -- à déplacer quelque part ...
     if love.keyboard.isDown("right") then
+        Player.facing = "right"
         Player.x = Player.x + Player.speed
     end
     if love.keyboard.isDown("left") then
+        Player.facing = "left"
         Player.x = Player.x - Player.speed
     end
     if love.keyboard.isDown("up") then
+        Player.facing = "up"
         Player.y = Player.y - Player.speed
     end
     if love.keyboard.isDown("down") then
+        Player.facing = "down"
         Player.y = Player.y + Player.speed
     end
 end

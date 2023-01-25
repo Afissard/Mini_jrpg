@@ -23,8 +23,26 @@ function animation.sprite_animation(dt, frame, max_frame)
     return frame
 end
 
+function animation.update_all_sprite(dt)
+    --[[
+        fonction pour regroupé toute les commande pour mettre à jour les sprites
+    ]]
+    Player.sprite_animation(dt)
+end
+
 function animation.draw_all_sprite()
-    love.graphics.draw(Player.sprite_sheet, Player.quads[Player.animation.frame], Player.x, Player.y)
+    --[[
+        fonction pour regroupé toute les commande pour afficher les sprites
+    ]]
+    if Player.facing == "down" then
+        love.graphics.draw(Player.sprite_sheet, Player.down[Player.animation.frame], Player.x, Player.y)
+    elseif Player.facing == "right" then
+        love.graphics.draw(Player.sprite_sheet, Player.right[Player.animation.frame], Player.x, Player.y)
+    elseif Player.facing == "left" then
+        love.graphics.draw(Player.sprite_sheet, Player.left[Player.animation.frame], Player.x, Player.y)
+    elseif Player.facing == "up" then
+        love.graphics.draw(Player.sprite_sheet, Player.up[Player.animation.frame], Player.x, Player.y)
+    end
 end
 
 return animation

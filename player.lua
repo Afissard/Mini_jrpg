@@ -26,9 +26,15 @@ Player.animation.frame = 1
 Player.animation.max_frame = 4
 Player.animation.timer = 0.1
 
-Player.quads = {}
+Player.down = {}
+Player.left = {}
+Player.right = {}
+Player.up = {}
 for i = 1, Player.animation.max_frame do
-    Player.quads[i] = love.graphics.newQuad(Player.width*(i-1),0, Player.width,Player.height, Player.sheet_width,Player.sheet_height)
+    Player.down[i] = love.graphics.newQuad(Player.width*(i-1),0, Player.width,Player.height, Player.sheet_width,Player.sheet_height)
+    Player.left[i] = love.graphics.newQuad(Player.width*(i-1),8, Player.width,Player.height, Player.sheet_width,Player.sheet_height)
+    Player.right[i] = love.graphics.newQuad(Player.width*(i-1),16, Player.width,Player.height, Player.sheet_width,Player.sheet_height)
+    Player.up[i] = love.graphics.newQuad(Player.width*(i-1),24, Player.width,Player.height, Player.sheet_width,Player.sheet_height)
 end
 
 
