@@ -42,20 +42,26 @@ end
 
 
 function Inputs() -- à déplacer quelque part ...
+    Player.animation.standing = true
+
     if love.keyboard.isDown("right") then
         Player.facing = "right"
+        Player.animation.standing = false
         Player.x = Player.x + Player.speed
     end
     if love.keyboard.isDown("left") then
         Player.facing = "left"
+        Player.animation.standing = false
         Player.x = Player.x - Player.speed
     end
     if love.keyboard.isDown("up") then
         Player.facing = "up"
+        Player.animation.standing = false
         Player.y = Player.y - Player.speed
     end
     if love.keyboard.isDown("down") then
         Player.facing = "down"
+        Player.animation.standing = false
         Player.y = Player.y + Player.speed
     end
 end
