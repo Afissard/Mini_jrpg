@@ -18,6 +18,8 @@ function love.load()
     Player = require('player')                  -- fichier avec toute les fonction et variables du joueur
     Animation = require('sprite_animation')     -- module pour gérer l'animation/affichage des sprites
     sti = require('Libraries/sti')              -- Simple Tiled Implementation Libraries
+    Camera = require('Libraries.hump.camera')   -- Module du package hump pour facilité l'utilisation de la camera de Löve
+    cam = Camera()
 
     GameMap = sti('Maps/map_1.lua')             -- charge la carte du jeu
 end
@@ -35,9 +37,13 @@ function love.draw()
     --[[
         Fonction "affichage" : met à jour l'écran
     ]]
-    love.graphics.scale(4.0)        -- agrandi les graphisme *4
-    GameMap:draw()                  -- Dessine la carte du jeu faites avec Tiled
-    Animation.draw_all_sprite()     -- regroupe les commande pour dessiné tout les sprites
+    cam:attach() -- attache à l'objet camera tout ce qui se trouve entre les 2 balise 'cam()'
+        love.graphics.scale(4.0)        -- agrandi les graphisme *4
+        --GameMap:draw()                  -- Dessine la carte du jeu faites avec Tiled
+        GameMap:drawLayer(GameMap.layers["Background"]) -- dessine les différentes couches de la map tiled
+        GameMap:drawLayer(GameMap.layers["Interaction"])
+        Animation.draw_all_sprite()     -- regroupe les commande pour dessiné tout les sprites
+    cam:detach()
 end
 
 
