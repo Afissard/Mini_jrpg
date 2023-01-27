@@ -7,8 +7,8 @@ local Player = {} -- table pour stocker les fonctions et variables du module
 Animation = require("sprite_animation")
 
 -- déplacement du joueur
-Player.x = 40
-Player.y = 20
+Player.x = 128
+Player.y = 128
 Player.speed = 0.5
 
 --Sprite du joueur : 

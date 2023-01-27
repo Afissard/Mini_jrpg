@@ -6,6 +6,9 @@
         > Pour utiliser le module sti, ne pas oublier d'embarquer la sprite_sheet lors de la création de la carte
             https://github.com/karai17/Simple-Tiled-Implementation/issues/259
         > 
+    TODO :
+        > Améliorer 'sprite_animation.lua' pour une plus grande facilité d'utilisation
+        > Dessiner le jouer au centre de la camera (offset : longueur/2, largeur/2)
 ]]
 
 function love.load()
@@ -20,6 +23,7 @@ function love.load()
     sti = require('Libraries/sti')              -- Simple Tiled Implementation Libraries
     Camera = require('Libraries.hump.camera')   -- Module du package hump pour facilité l'utilisation de la camera de Löve
     cam = Camera()
+    Zoom = 4.0
 
     GameMap = sti('Maps/map_1.lua')             -- charge la carte du jeu
 end
@@ -31,6 +35,9 @@ function love.update(dt) -- 'dt' signifie 'delta time' soit le FPS ?
     Inputs()
     GameMap:update(dt)
     Animation.update_all_sprite(dt)
+    --Camera stuff :
+    cam:lookAt(Player.x*Zoom, Player.y*Zoom)                -- la camera suis le joueur
+    --Camera_border()
 end
 
 function love.draw()
@@ -38,12 +45,13 @@ function love.draw()
         Fonction "affichage" : met à jour l'écran
     ]]
     cam:attach() -- attache à l'objet camera tout ce qui se trouve entre les 2 balise 'cam()'
-        love.graphics.scale(4.0)        -- agrandi les graphisme *4
-        --GameMap:draw()                  -- Dessine la carte du jeu faites avec Tiled
+        love.graphics.scale(Zoom)        -- agrandi les graphisme *4
+        -- Dessine la carte du jeu faites avec Tiled
         GameMap:drawLayer(GameMap.layers["Background"]) -- dessine les différentes couches de la map tiled
         GameMap:drawLayer(GameMap.layers["Interaction"])
+
         Animation.draw_all_sprite()     -- regroupe les commande pour dessiné tout les sprites
-    cam:detach()
+        cam:detach()
 end
 
 
@@ -72,3 +80,19 @@ function Inputs() -- à déplacer quelque part ...
     end
 end
 
+function Camera_border()
+    local win_width = love.graphics.getWidth()              -- récupère largeur de la fenêtre
+    local win_height = love.graphics.getHeight()            -- récupère longueur de la fenêtre
+    local map_width = GameMap.width * GameMap.tilewidth     -- largeur de la map
+    local map_height = GameMap.height * GameMap.tileheight  -- longueur de la map
+    if cam.x < win_width/2 then                 -- la camera s'arrette au bord de l'écran à gauche
+        cam.x = win_width/2
+    elseif cam.x > (map_width - win_width/2) then   -- la camera s'arrette au bord de l'écran à droite
+        cam.x = (map_width - win_width/2)
+    end
+    if cam.y < win_height/2 then                -- la camera s'arrette au bord de l'écran en haut
+        cam.y = win_height/2
+    elseif cam.y > (map_height - win_height/2) then -- la camera s'arrette au bord de l'écran en bas
+    cam.y = (map_height - win_height/2)
+    end
+end
