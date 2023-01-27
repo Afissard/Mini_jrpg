@@ -51,7 +51,8 @@ function love.draw()
         GameMap:drawLayer(GameMap.layers["Interaction"])
 
         Animation.draw_all_sprite()     -- regroupe les commande pour dessiné tout les sprites
-        cam:detach()
+    cam:detach()
+    love.graphics.print("This is an GUI", 10,10)
 end
 
 
@@ -81,6 +82,10 @@ function Inputs() -- à déplacer quelque part ...
 end
 
 function Camera_border()
+    --[[
+        Fonction pour stopper la camera aux bordure de la map.
+        (Seras probablement suprimé -> pas utilisable pour de petite map en grand écran)
+    ]]
     local win_width = love.graphics.getWidth()              -- récupère largeur de la fenêtre
     local win_height = love.graphics.getHeight()            -- récupère longueur de la fenêtre
     local map_width = GameMap.width * GameMap.tilewidth     -- largeur de la map
