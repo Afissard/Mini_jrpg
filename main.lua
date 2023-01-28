@@ -56,7 +56,10 @@ function love.draw()
 end
 
 
-function Inputs() -- à déplacer quelque part ...
+function Inputs() -- à déplacer quelque part ?
+    --[[
+        Gestion des inputs
+    ]]
     Player.animation.standing = true
 
     if love.keyboard.isDown("right") then
